@@ -72,6 +72,9 @@ const App = () => {
         username,
         password,
       });
+      console.log(user)
+
+      noteService.setToken(user.token)
       setUser(user);
       setUsername("");
       setPassword("");
