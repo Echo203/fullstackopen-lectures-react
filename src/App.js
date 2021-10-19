@@ -5,6 +5,8 @@ import Notification from "./components/Notification";
 import Footer from "./components/Footer";
 import loginService from "./services/loginService";
 import LoginForm from "./components/LoginForm";
+import Togglable from "./components/Toggleable";
+import NoteForm from "./components/NoteForm";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -14,7 +16,6 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [loginVisible, setLoginVisible] = useState(false)
 
   const fetchNotes = () => {
     noteService.getAll().then((initialNotes) => setNotes(initialNotes));
@@ -71,10 +72,6 @@ const App = () => {
       });
   };
 
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value);
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -95,34 +92,28 @@ const App = () => {
   };
 
   const noteForm = () => (
-    <form onSubmit={addNote}>
-      <input onChange={handleNoteChange} value={newNote} />
-      <button type="submit">save</button>
-    </form>
+    <Togglable buttonLabel="Add note">
+      <NoteForm
+        newNote={newNote}
+        handleNewNote={addNote}
+        handleNoteChange={({ target }) => setNewNote(target.value)}
+      />
+    </Togglable>
   );
 
   const loginForm = () => {
-    const hiddenWhenVisible = { display: loginVisible ? 'none' : '' }
-    const showWhenVisible = { display: loginVisible ? '' : 'none'}
-
-    return(
-      <div>
-      <div style={hiddenWhenVisible}>
-        <button onClick={() => setLoginVisible(true)}>Login</button>
-      </div>
-      <div style={showWhenVisible}>
+    return (
+      <Togglable buttonLabel="Login">
         <LoginForm
-            username={username}
-            password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
-            handleLogin={handleLogin}
-          />
-          <button onClick={() => setLoginVisible(false)}>Cancel</button>
-        </div>
-      </div>
-    )
-  }
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleLogin={handleLogin}
+        />
+      </Togglable>
+    );
+  };
 
   return (
     <div>
