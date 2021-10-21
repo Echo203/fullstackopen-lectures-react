@@ -14,6 +14,9 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [user, setUser] = useState(null);
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const fetchNotes = () => {
     noteService.getAll().then((initialNotes) => setNotes(initialNotes));
   };
@@ -34,7 +37,7 @@ const App = () => {
     : notes.filter((note) => note.important === true);
 
   const createNote = (noteObject) => {
-    noteFormRef.current.toggleVisibility()
+    noteFormRef.current.toggleVisibility();
     noteService.create(noteObject).then((returnedNote) => {
       setNotes(notes.concat(returnedNote));
     });
@@ -71,15 +74,17 @@ const App = () => {
       window.localStorage.setItem("loggedNoteappUser", JSON.stringify(user));
       noteService.setToken(user.token);
       setUser(user);
+      setUsername("");
+      setPassword("");
     } catch (exception) {
       setErrorMessage("Wrong Credentials");
       setTimeout(() => setErrorMessage(null), 5000);
     }
   };
 
-  const noteFormRef = useRef()
+  const noteFormRef = useRef();
   const noteForm = () => (
-    <Togglable buttonLabel="Add note" ref={noteFormRef} >
+    <Togglable buttonLabel="Add note" ref={noteFormRef}>
       <NoteForm createNote={createNote} />
     </Togglable>
   );
@@ -89,6 +94,10 @@ const App = () => {
       <Togglable buttonLabel="Login">
         <LoginForm
           handleLogin={handleLogin}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          hadnlePasswordChange={({ target }) => setPassword(target.value)}
+          username={username}
+          password={password}
         />
       </Togglable>
     );
