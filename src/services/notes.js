@@ -28,5 +28,4 @@ const update = (changedNote, id) => {
   return request.then(res => res.data)
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { getAll, create, update, setToken }
