@@ -30,4 +30,15 @@ describe('<Togglable />', () => {
     const div = component.container.querySelector('.togglableContent')
     expect(div).not.toHaveStyle('display: none')
   })
+
+  test('after using close button, children are not displayed', () => {
+    const button = component.getByText('Show...')
+    fireEvent.click(button)
+
+    const closingButton = component.getByText('Cancel')
+    fireEvent.click(closingButton)
+
+    const div = component.container.querySelector('.togglableContent')
+    expect(div).toHaveStyle('display: none')
+  })
 })
