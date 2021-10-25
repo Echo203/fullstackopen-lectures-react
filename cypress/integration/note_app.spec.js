@@ -20,7 +20,12 @@ describe('Note app', function() {
     cy.get('#password').type('wrongPassword')
     cy.get('#login-button').click()
 
-    cy.get('.error').contains('Wrong Credentials')
+    cy.get('.error')
+      .should('contain', 'Wrong Credentials')
+      .and('have.css', 'color', 'rgb(255, 0, 0)')
+      .and('have.css', 'border-style', 'solid')
+
+    cy.get('html').should('not.contain', 'Logged as test')
   })
 
   it('Login form can be opened', function() {
