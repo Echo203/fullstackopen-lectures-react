@@ -14,13 +14,13 @@ describe('Note app', function() {
     cy.contains('Note app, Department of Computer Science, University of Helsinki 2021')
   })
 
-  it.only('login fails with wrong password', function() {
+  it('login fails with wrong password', function() {
     cy.contains('Login').click()
     cy.get('#username').type('test')
     cy.get('#password').type('wrongPassword')
     cy.get('#login-button').click()
 
-    cy.contains('Wrong Credentials')
+    cy.get('.error').contains('Wrong Credentials')
   })
 
   it('Login form can be opened', function() {
