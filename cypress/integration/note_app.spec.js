@@ -61,12 +61,22 @@ describe('Note app', function() {
       })
 
       it('it can be made important', function() {
-        cy.contains('another cypress note')
-          .contains('make important')
-          .click()
+        cy.contains('another cypress note').parent().find('button').as('theButton')
+        cy.get('@theButton').click()
+        cy.get('@theButton').should('contain', 'make not important')
+      })
+    })
+    describe('and several notes exist', function () {
+      beforeEach(function () {
+        cy.createNote({ content: 'first note', important: false })
+        cy.createNote({ content: 'second note', important: false })
+        cy.createNote({ content: 'third note', important: false })
+      })
 
-        cy.contains('another cypress note')
-          .contains('make not important')
+      it('one of those can be made important', function () {
+        cy.contains('second note').parent().find('button').as('theButton')
+        cy.get('@theButton').click()
+        cy.get('@theButton').should('contain', 'make not important')
       })
     })
   })
