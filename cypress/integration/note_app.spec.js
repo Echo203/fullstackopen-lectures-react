@@ -43,12 +43,8 @@ describe('Note app', function() {
 
   describe('When logged in', function() {
     beforeEach(function() {
-      cy.contains('Login').click()
-      cy.get('#username').type('test')
-      cy.get('#password').type('test')
-      cy.get('#login-button').click()
+      cy.login({ username: 'test', password: 'test' })
     })
-
     it('new note can be added', function() {
       cy.contains('Add note').click()
       cy.get('input').type('New note added by cypress')
@@ -74,3 +70,4 @@ describe('Note app', function() {
     })
   })
 })
+
