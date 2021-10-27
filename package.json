@@ -16,6 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "npm run test -- --coverage --watchAll=false",
+    "test:e2e": "cypress run",
     "eject": "react-scripts eject",
     "server": "json-server --watch db.json --port 3001",
     "eslint": "eslint .",
