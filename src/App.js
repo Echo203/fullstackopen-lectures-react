@@ -8,6 +8,8 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Toggleable'
 import NoteForm from './components/NoteForm'
 
+//XD
+
 const App = () => {
   const [notes, setNotes] = useState([])
   const [showAll, setShowAll] = useState(true)
